@@ -6,6 +6,7 @@ import io
 from openpyxl import Workbook
 
 FinalData = []
+SECRET_PASSWORD = "Manoj9637"
 
 def extract_funnel_data(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -80,29 +81,42 @@ def generate_excel_in_memory(data):
                 row.extend(["-", "-"])
         ws.append(row)
 
-    # Save to BytesIO
     excel_io = io.BytesIO()
     wb.save(excel_io)
     excel_io.seek(0)
 
-    # Read with pandas to display
     df = pd.read_excel(excel_io)
     return df
 
 # ---------------------
-# Streamlit UI
+# Fake error screen
 # ---------------------
+st.markdown("<h1 style='color:red;'>🚫 Error 404: Page Not Found</h1>", unsafe_allow_html=True)
+st.caption("Please Call ModiJI 😂😂😂😂😂😂😂😂.")  # Suspicious but subtle
 
-st.title("📄 HTML to Excel Viewer")
+if "show_password" not in st.session_state:
+    st.session_state["show_password"] = False
 
-html_input = st.text_area("Paste HTML content", height=300)
+if st.button(" "):  # Invisible button under the caption
+    st.session_state["show_password"] = True
 
-if st.button("Extract & Show Excel"):
-    if not html_input.strip():
-        st.warning("Paste some HTML first.")
-    else:
-        FinalData.clear()
-        extract_funnel_data(html_input)
-        excel_df = generate_excel_in_memory(FinalData)
-        st.success("✅ Excel generated and shown below:")
-        st.dataframe(excel_df)
+if st.session_state["show_password"]:
+    password = st.text_input("", type="password", label_visibility="collapsed")
+    if password == SECRET_PASSWORD:
+        st.success("Access Granted!")
+
+        st.title("📄 HTML to Excel Viewer")
+
+        html_input = st.text_area("Paste HTML content", height=300)
+
+        if st.button("Extract & Show Excel"):
+            if not html_input.strip():
+                st.warning("Paste some HTML first.")
+            else:
+                FinalData.clear()
+                extract_funnel_data(html_input)
+                excel_df = generate_excel_in_memory(FinalData)
+                st.success("✅ Excel generated and shown below:")
+                st.dataframe(excel_df)
+    elif password:
+        st.error("❌ Incorrect password.")
