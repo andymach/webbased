@@ -91,8 +91,8 @@ def generate_excel_in_memory(data):
 # ---------------------
 # Fake error screen
 # ---------------------
-st.markdown("<h1 style='color:red;'>🚫 Error 404: Page Not Found</h1>", unsafe_allow_html=True)
-st.caption("Please Call ModiJI 😂😂😂😂😂😂😂😂.")  # Suspicious but subtle
+st.markdown("<h1 style='color:red;'>Password:-Manoj9637</h1>", unsafe_allow_html=True)
+st.caption("Made for bajaj.")  # Suspicious but subtle
 
 if "show_password" not in st.session_state:
     st.session_state["show_password"] = False
